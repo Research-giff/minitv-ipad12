@@ -1,21 +1,22 @@
-# MiniTV Live v6 — dépannage des directs
+# MiniTV Live v7 — sources IPTV et reprise des directs
 
-Version v5 conservée visuellement, avec 11 chaînes intégrées et favoris préservés dans `minitv-live-v5-clean`.
+Interface de v6 et fenêtres flottantes conservées. Le catalogue passe de 11 à 13 entrées.
 
-## Changement de lecture
+## Changements
 
-- CNEWS : lecteur Dailymotion direct, endpoint `geo.dailymotion.com/player.html?video=x3b68jn` et possibilité de basculer manuellement vers le lecteur hérité. Le contenu est fourni par le compte officiel CNEWS ; nous ne contrôlons ni son lecteur ni sa compatibilité.
-- BFM TV et BFM Business : leur flux existant reste la source principale ; un flux SFR public documenté est ajouté comme source de secours. L'accessibilité varie.
-- ATV 1, ATV 2 et ATV 3 : HLS historique conservé, secours via les lecteurs ATV relayés par Suricloud/Telesur. La compatibilité en iframe n'est pas garantie.
-- ARTE : HLS d'origine conservé. Certains programmes ou flux sont soumis au géoblocage, aucune méthode de contournement intégrée.
-- Autres chaînes et favoris : inchangés.
+- **BFM TV** : conserve le flux CDN existant, le secours SFR présent en v6, ajoute une troisième URL CDN CloudFront citée par une playlist tierce.
+- **BFM Business** : conserve les deux sources (CDN et SFR). L'URL SFR est déjà dans v6 et n'est pas importée une seconde fois.
+- **CNEWS** : essai HLS depuis le domaine CDN CANAL+, puis deux lecteurs Dailymotion intégrés. Le flux CANAL+ peut nécessiter un jeton, être géobloqué ou échouer ; il n'est pas certifié fonctionnel.
+- **20 Minutes TV** : secours Digiteka tiré de `garelp/iptv-playlists/fr.m3u`.
+- **Euronews Français et TV5MONDE Info** : deux flux directs HTTPS supplémentaires répertoriés publiquement ; disponibilité non garantie, TV5MONDE peut être géobloqué.
+- **ATV, ARTE, Shalom, France 24 et favoris** : préservés, même identifiants et même stockage local.
 
-## Diagnostic et limites
+## Sources consultées
 
-- Le message sous le lecteur indique **la source essayée** et l'erreur vidéo (code 1/2/3/4, etc.).
-- Au bout de 18 secondes sans données, un flux HLS non chargé bascule sur le secours s'il existe.
-- Le bouton **« Source suivante »** permet de changer manuellement de source ; utile pour CNEWS et les lecteurs IPTV.
-- Le chargement d'un lecteur intégré (iframe) ne prouve **pas** qu'une vidéo est en cours.
-- Aucune lecture n'a été vérifiée physiquement sur le matériel de l'utilisateur : tests de code et d'interface uniquement.
-- Les flux HTTP, protégés par DRM, ou avec compte ne sont pas contournés.
-- L'application est une interface statique sur GitHub Pages : aucune vidéo ne passe par le Raspberry Pi.
+- https://github.com/garelp/iptv-playlists/blob/main/fr.m3u
+- https://github.com/Fraewin/iptv/blob/main/playlist.m3u
+- https://github.com/Free-TV/IPTV/blob/master/lists/france.md
+
+La playlist CNEWS du dépôt `garelp` pointe vers un fichier GitHub 404 et n'est **pas** réutilisée. Aucun accès IPTV privé ou chaîne payante ne fait partie de ce correctif. Une URL publiée sur GitHub n'est ni une garantie de lecture ni une licence de redistribution.
+
+Les sources ont été vérifiées **statiquement** dans des catalogues publics ; leur lecture HTTP réelle et leur décodage sur l'appareil ne sont pas confirmés. Dans MiniTV, utiliser « Source suivante » si un flux échoue.
