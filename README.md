@@ -1,16 +1,19 @@
-# MiniTV Live v8 — diagnostic de lecture et moteur HLS
+# MiniTV Live v9 — catalogue nettoyé + dépannage Euronews
 
-Cette version corrige le lecteur, sans changer l’interface ni supprimer des chaînes ou favoris.
+## Changements
 
-- Ajout de hls.js 1.5.20, chargé uniquement lorsque le navigateur ne prend pas en charge HLS nativement. Deux CDN publics servent de redondance, et aucune requête n’est nécessaire sur Safari natif.
-- BFM TV / BFM Business : sources d’origine et secours conservés, désormais exploitables sur Chrome/Firefox si les serveurs et règles CORS le permettent.
-- CNEWS : le HLS CANAL+ reste comme source candidate. Les embeds Dailymotion legacy sans Player ID ont été retirés car ils renvoient HTTP 403 (exigence Dailymotion septembre 2026). La chaîne demeure visible, mais la disponibilité directe n’est pas garantie.
-- Sur les iframes, « page chargée » ne signifie plus « lecture confirmée ». Le mini-lecteur ne flotte qu’après l’événement de lecture vidéo confirmée.
-- L’application affiche des raisons concrètes lorsqu’un flux HLS échoue (réseau, CORS, manifeste, codec).
-- Tous les 13 canaux et les favoris (`minitv-live-v5-clean`) sont préservés. Rien n’est retransmis par le Raspberry Pi.
+- Supprimées du catalogue intégré : ATV 1, ATV 2, ATV 3, Shalom TV.
+- Une liste personnelle ancienne portant ces noms est également exclue à la lecture et à l'import M3U ; les favoris correspondants sont nettoyés automatiquement.
+- Euronews Français : une adresse CDN Euronews répertoriée, deux sources de secours (Samsung/Wurl et Netplus), puis l'ancienne adresse. Toutes restent à vérifier sur l'appareil.
+- CNEWS : conservée, mais marquée « accès à vérifier ». Le 403 provenait d'un refus du diffuseur pour l'intégration ; aucun accès non autorisé ni ancien embed Dailymotion cassé n'est ajouté. Pour une intégration complète, il faudrait une URL de lecture autorisée ou un Player ID fourni par le diffuseur.
+- France 24, ARTE, BFM TV, BFM Business, 20 Minutes TV et TV5MONDE Info conservées.
+- Même design, favoris, moteur hls.js et fenêtre flottante.
 
-## Limites
+## Confiance des résultats
 
-Il n’est pas possible de transformer un 403 du diffuseur en autorisation d’accès. Aucune lecture réelle sur le matériel de l’utilisateur n’a été démontrée. L’utilisation d’un CDN hls.js nécessite un accès Internet et peut être bloquée par un filtrage réseau.
+Tests syntaxiques et interface locale uniquement. Les URL ne sont pas certifiées lisibles ni disponibles depuis tous les pays. Le site statique GitHub Pages ne relaie pas les vidéos. La lecture réelle doit être validée sur l'appareil.
 
-Sources : https://developers.dailymotion.com/changelog/api-player-id-required-in-embed-urls ; https://github.com/video-dev/hls.js
+Sources :
+- https://github.com/iptv-org/iptv
+- https://database.freetuxtv.net/webStream/index
+- https://faq.dailymotion.com/hc/en-us/articles/115008959787-Embed-your-content
