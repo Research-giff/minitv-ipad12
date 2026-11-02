@@ -1,22 +1,24 @@
-# MiniTV Live — Version grand public v3
+# MiniTV Live v4 — Direct intégré
 
-Application web statique adaptée à Safari iOS 12.5.7, sans serveur Raspberry Pi pendant la lecture.
+Application de télévision web autonome. Interface claire, navigation par cartes, favoris et recherche.
 
-## Nouveautés
+## Catalogue
 
-- Nouvelle interface grand public : lecteur 16:9, cartes de chaînes, catégories, favoris et recherche.
-- Retrait des chaînes **Africanews** et **Africa 24**.
-- 6 entrées pour le **Suriname** : Trishul TV et Shalom TV en HLS, ATV 1/2/3 et Apintie TV via les lecteurs des diffuseurs.
-- **CNEWS** : ouverture de sa page dédiée au direct sur Molotov, avec une alternative vers le catalogue officiel CANAL+. Il n'existe pas dans cette version de flux CNEWS HLS officiel validé et intégrable ; son visionnage dépend de leur service, des droits, du pays et de la compatibilité navigateur.
-- Flux français conservés : France 24 FR/EN, ARTE, BFM TV, BFM Business et 20 Minutes TV.
-- Favoris, import M3U (jusqu'à 200 entrées), ajout manuel de flux HTTPS et liens officiels.
+- France 24 (français et anglais), ARTE, BFM TV, BFM Business et 20 Minutes TV : flux HLS directs.
+- CNEWS : direct de son compte **officiel Dailymotion** intégré dans la page (`x3b68jn`) : pas de redirection vers un site de télévision.
+- Suriname : ATV 1, ATV 2, ATV 3 et Shalom TV : adresses HLS publiques répertoriées.
+- Trishul TV, Africanews, Africa 24, Apintie TV et tous les raccourcis sans lecteur intégré ont été retirés.
 
-## Installer
+## Précisions
 
-Dézippe cette archive sur le Raspberry Pi, puis lance `bash publier.sh` depuis le dossier extrait. Le script clone un dépôt propre, remplace `index.html` et `README.md`, puis publie sur la branche `main` via GitHub CLI. Il ne transfère pas de fichiers secrets et conserve les autres fichiers déjà publiés (notamment l'icône).
+CNEWS utilise un lecteur vidéo embarqué, contrairement aux autres chaînes lues via le lecteur natif. Son fonctionnement dépend de Dailymotion et du navigateur utilisé.
 
-## Limites
+Les adresses HLS surinamaises proviennent de listes publiques et d'infrastructures associées aux diffuseurs. Leur disponibilité **n'a pas pu être validée par lecture réelle** sur l'appareil de destination. Une liste publique n'est pas une preuve d'autorisation de redistribution commerciale. Pas de contournement de DRM, d'authentification ou de géoblocage.
 
-Le déploiement GitHub Pages prouve la disponibilité de l'interface, **pas** la lecture de chaque chaîne. Les flux de tierces parties peuvent expirer, être géobloqués, demander un compte, utiliser des codecs incompatibles iOS 12 ou être protégés par des droits. Pas de contournement de DRM, d'abonnement ou de restriction. L'application n'héberge ni ne retransmet les images.
+Les données privées (favoris et playlists ajoutées) restent dans le stockage local de l'appareil. Seules les URLs vidéo directes HTTPS sont ajoutables.
 
-Sources : https://www.telesur.sr/atv/ · https://www.apintie.sr/livestream · https://www.canalplus.com/tab/live/all-channels · https://www.molotov.tv/fr_fr/c/2/cnews · https://github.com/iptv-org/iptv/blob/master/streams/sr.m3u
+## Publication
+
+Décompresser l'archive, puis lancer `bash minitv-live-v4/publier.sh` depuis le dossier contenant le projet. Le script utilise le compte GitHub déjà authentifié, récupère un dépôt propre, copie les nouveaux fichiers, vérifie puis publie sur `main`. La lecture des chaînes doit être validée séparément.
+
+Sources : https://www.dailymotion.com/video/x3b68jn ; https://github.com/iptv-org/iptv/blob/master/streams/sr.m3u ; https://www.telesur.sr/atv/ ; https://gist.github.com/giomaniego-dev/5d5e671a09514c5011ba4b54289b0b95
