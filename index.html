@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07101b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MiniTV Live">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" type="image/png" href="icon-180.png">
+  <title>MiniTV Live — iPad Edition</title>
+  <style>
+    :root { --bg:#070c15; --panel:#101b2b; --panel2:#142239; --text:#edf4ff; --muted:#94a8c5; --stroke:#253852; --blue:#4aa6ff; --violet:#827aff; --green:#65dfbc; --amber:#f6c571; }
+    * { box-sizing:border-box; }
+    html { -webkit-text-size-adjust:100%; }
+    body { margin:0; background:var(--bg); color:var(--text); font:15px/1.45 -apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; -webkit-tap-highlight-color:transparent; }
+    button:focus,input:focus,select:focus { outline:2px solid var(--blue); outline-offset:2px; }
+    .app { min-height:100vh; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:15px; padding:16px 22px; border-bottom:1px solid var(--stroke); background:#0b1320; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .brandmark { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:12px; color:#08101d; background:linear-gradient(145deg,#8bd6ff,#587dff); font-size:23px; font-weight:900; }
+    .brand strong { display:block; letter-spacing:-.35px; font-size:21px; line-height:1.1; }
+    .brand small { display:block; color:var(--muted); font-size:11px; letter-spacing:2px; margin-top:3px; text-transform:uppercase; }
+    .top-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .btn { padding:10px 13px; border:1px solid var(--stroke); background:#18273d; color:var(--text); border-radius:11px; font-weight:650; min-height:39px; }
+    .btn.accent { background:linear-gradient(145deg,#3689ea,#6267db); border-color:transparent; color:#fff; }
+    .btn.secondary { background:transparent; }
+    .layout { display:flex; min-height:calc(100vh - 74px); }
+    .sidebar { flex:0 0 295px; width:295px; padding:19px 14px; border-right:1px solid var(--stroke); background:#0c1523; }
+    .side-label { color:var(--muted); letter-spacing:1.5px; font-size:10px; text-transform:uppercase; padding:2px 7px 10px; font-weight:700; }
+    .search { display:block; width:100%; background:#17263a; color:var(--text); border:1px solid var(--stroke); border-radius:11px; padding:12px; margin:0 0 13px; }
+    .search::placeholder { color:#8297b2; }
+    .filters { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:17px; }
+    .filter { padding:7px 11px; border-radius:20px; background:transparent; border:1px solid #2b3e59; color:var(--muted); font-size:12px; }
+    .filter.active { border-color:#4e83ca; color:#e6f4ff; background:#183454; }
+    .channel-list { max-height:calc(100vh - 267px); overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .ch { display:flex; align-items:center; gap:10px; width:100%; border:1px solid transparent; color:var(--text); background:transparent; padding:11px 9px; border-radius:13px; text-align:left; margin:0 0 5px; }
+    .ch.active { background:#19314c; border-color:#315b84; }
+    .ch:hover { background:#17263d; }
+    .station-logo { flex:0 0 46px; width:46px; height:44px; display:flex; align-items:center; justify-content:center; background:#1c314d; border-radius:11px; color:#bce5ff; font-weight:800; font-size:12px; letter-spacing:-.4px; text-align:center; }
+    .ch-data { flex:1; min-width:0; }
+    .ch-name { display:block; font-size:14px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ch-sub { display:block; font-size:11px; color:var(--muted); margin-top:3px; }
+    .fav { flex:0 0 35px; width:35px; height:35px; border:0; border-radius:9px; color:#8a9dbb; background:transparent; font-size:22px; line-height:1; }
+    .fav.on { color:var(--amber); }
+    .empty { padding:20px 10px; color:var(--muted); font-size:13px; }
+    .main { flex:1; min-width:0; padding:25px 30px 35px; }
+    .eyebrow { color:var(--green); letter-spacing:2px; font-size:11px; font-weight:850; text-transform:uppercase; }
+    h1 { font-size:30px; line-height:1.18; letter-spacing:-.8px; margin:10px 0 7px; }
+    .subtitle { color:var(--muted); margin:0 0 20px; }
+    .player-shell { border:1px solid #293d56; border-radius:19px; padding:10px; background:#0e1724; box-shadow:0 18px 55px rgba(0,0,0,.3); }
+    .player-frame { position:relative; background:#03070c; border-radius:12px; overflow:hidden; min-height:220px; }
+    video { display:block; width:100%; aspect-ratio:16/9; max-height:66vh; background:black; }
+    .player-placeholder { position:absolute; left:0; right:0; top:0; bottom:0; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; pointer-events:none; color:#9baec9; background:radial-gradient(ellipse at center,#183055 0%,#08111e 70%); }
+    .play-symbol { font-size:53px; line-height:1; color:#74b9ff; margin-bottom:10px; }
+    .player-placeholder strong { font-size:19px; color:#edf4ff; }
+    .player-placeholder span { font-size:12px; max-width:80%; margin-top:7px; }
+    .player-shell.active .player-placeholder { display:none; }
+    .player-controls { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; padding:12px 4px 1px; }
+    .live { font-size:11px; color:var(--green); letter-spacing:.7px; font-weight:900; }
+    .live:before { content:'●'; color:var(--green); margin-right:6px; }
+    .playing-name { font-weight:800; font-size:16px; margin:3px 0 0; }
+    .small-actions { display:flex; gap:7px; flex-wrap:wrap; }
+    .notice { padding:13px 16px; background:#102136; border:1px solid #244361; border-radius:13px; color:#b8cee7; font-size:13px; margin-top:18px; }
+    .notice strong { color:#e4f3ff; }
+    .status { margin-top:13px; color:#c2d6ec; font-size:13px; min-height:19px; }
+    .status.bad { color:#ffc08f; }
+    .footer { margin-top:20px; color:#829bb7; font-size:12px; }
+    .modal { position:fixed; z-index:20; inset:0; display:none; justify-content:center; align-items:center; padding:16px; background:rgba(1,6,14,.82); }
+    .modal.open { display:flex; }
+    .dialog { background:#142238; border:1px solid #375071; padding:24px; border-radius:18px; width:100%; max-width:460px; max-height:95vh; overflow-y:auto; }
+    .dialog h2 { margin:0 0 7px; font-size:22px; }
+    .dialog p { color:var(--muted); font-size:13px; margin:0 0 18px; }
+    .field { margin:0 0 13px; }
+    label { display:block; font-size:12px; color:#cbdaf0; margin:0 0 6px; font-weight:650; }
+    .field input,.field select { display:block; width:100%; padding:11px; border-radius:9px; background:#0b1627; color:#fff; border:1px solid #3b526d; }
+    .row-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
+    .help { color:#9eb9d6; font-size:11px; margin-top:7px; }
+    .hidden { display:none!important; }
+    @media(max-width:760px) { .topbar { padding:12px; } .top-actions .btn { font-size:12px; padding:9px; } .layout { flex-direction:column; } .main { order:0; padding:18px 12px; } .sidebar { order:1; flex:none; width:100%; padding:15px 12px; border-right:0; border-top:1px solid var(--stroke); } .channel-list { max-height:none; } h1 { font-size:24px; } .player-frame { min-height:150px; } .player-controls { padding:11px 0 0; } }
+    @media(min-width:761px) and (max-width:1040px) { .sidebar { flex-basis:255px; width:255px; } .main { padding:23px 19px; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><div class="brandmark">▶</div><div><strong>MiniTV <span style="color:#7cc4ff">Live</span></strong><small>iPad Edition · iOS 12</small></div></div>
+      <div class="top-actions">
+        <button class="btn secondary" id="importBtn" type="button">＋ Playlist M3U</button>
+        <button class="btn accent" id="addBtn" type="button">＋ Chaîne</button>
+      </div>
+    </header>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="side-label">Mes chaînes <span id="count"></span></div>
+        <input class="search" id="search" type="search" placeholder="Rechercher une chaîne…" autocomplete="off" aria-label="Rechercher une chaîne">
+        <div class="filters" id="filters"></div>
+        <div class="channel-list" id="channels"></div>
+      </aside>
+      <main class="main">
+        <div class="eyebrow">● Télévision en direct · Sans Raspberry Pi</div>
+        <h1>Ta télévision, en toute liberté.</h1>
+        <p class="subtitle">Sélectionne une chaîne. Les flux sont lus directement depuis Internet par l'iPad.</p>
+        <section class="player-shell" id="playerShell">
+          <div class="player-frame">
+            <video id="video" controls playsinline webkit-playsinline preload="none" aria-label="Lecteur vidéo en direct"></video>
+            <div class="player-placeholder" id="placeholder"><div class="play-symbol">▶</div><strong>Prêt pour le direct</strong><span>Choisis une chaîne dans la liste pour démarrer.</span></div>
+          </div>
+          <div class="player-controls">
+            <div><div class="live" id="liveTag">SÉLECTIONNE UNE CHAÎNE</div><div class="playing-name" id="nowTitle">Aucune chaîne sélectionnée</div></div>
+            <div class="small-actions">
+              <button class="btn" type="button" id="reloadBtn">↻ Relancer</button>
+              <button class="btn secondary hidden" type="button" id="removeBtn">Supprimer</button>
+              <button class="btn secondary" type="button" id="directBtn">↗ Ouvrir le direct</button>
+            </div>
+          </div>
+        </section>
+        <p class="status" id="status" role="status" aria-live="polite">Choisis une chaîne pour commencer.</p>
+        <div class="notice"><strong>Lecture directe, sans serveur :</strong> aucun flux vidéo ne passe par le Pi. Certains directs peuvent être géobloqués, retirés, nécessiter un compte ou être incompatibles avec Safari iOS 12. Les liens des chaînes sont externes et peuvent évoluer.</div>
+        <p class="footer">MiniTV Live est un projet personnel indépendant, sans affiliation avec Molotov ou les diffuseurs. N'importe quelle URL privée, protégée ou illégale n'est pas automatiquement rendue accessible par l'application.</p>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="dialog">
+      <h2 id="modalTitle">Ajouter une chaîne</h2>
+      <p>Ajoute un flux vidéo HLS public en HTTPS ou un lien vers le site officiel d'une chaîne.</p>
+      <form id="channelForm">
+        <div class="field"><label for="name">Nom de la chaîne</label><input id="name" maxlength="70" required placeholder="Ex. Ma chaîne"></div>
+        <div class="field"><label for="address">Adresse HTTPS du flux ou du site</label><input id="address" type="url" inputmode="url" required placeholder="https://…/direct.m3u8"></div>
+        <div class="field"><label for="kind">Type</label><select id="kind"><option value="stream">Flux HLS / MP4 à lire ici</option><option value="site">Ouvrir le site officiel</option></select></div>
+        <div class="field"><label for="category">Catégorie</label><select id="category"><option>Info</option><option>Culture</option><option>TV</option><option>Monde</option><option>Autres</option></select></div>
+        <div class="help">Le lien doit commencer par https:// et pointer vers un flux que tu es autorisé à consulter.</div>
+        <div class="row-actions"><button type="button" class="btn secondary" id="cancelBtn">Annuler</button><button type="submit" class="btn accent">Ajouter</button></div>
+      </form>
+    </div>
+  </div>
+  <input id="playlistFile" type="file" accept=".m3u,.m3u8,audio/x-mpegurl,application/vnd.apple.mpegurl,text/plain" class="hidden">
+
+<script>
+(function() {
+  'use strict';
+  // URLs de départ issues du catalogue public IPTV-org (novembre 2026).
+  // Flux externes : leur fonctionnement et leurs droits d'utilisation peuvent changer.
+  var BUILTIN = [
+    {id:'fr24',name:'France 24 Français',tag:'F24',cat:'Info',kind:'stream',url:'https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_900.m3u8'},
+    {id:'fr24en',name:'France 24 English',tag:'F24',cat:'Monde',kind:'stream',url:'https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_5000.m3u8'},
+    {id:'arte',name:'ARTE',tag:'ARTE',cat:'Culture',kind:'stream',url:'https://artesimulcast.akamaized.net/hls/live/2031003/artelive_fr/index.m3u8',note:'Géoblocage possible'},
+    {id:'bfm',name:'BFM TV',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8'},
+    {id:'africanews',name:'Africanews Français',tag:'AFN',cat:'Info',kind:'stream',url:'https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8'},
+    {id:'africa24',name:'Africa 24',tag:'A24',cat:'Monde',kind:'stream',url:'https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8'},
+    {id:'bfmbusiness',name:'BFM Business',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8'},
+    {id:'20minutes',name:'20 Minutes TV',tag:'20M',cat:'TV',kind:'stream',url:'https://live-20minutestv.digiteka.com/1961167769/index.m3u8'},
+    {id:'cnews-site',name:'CNEWS · site officiel',tag:'C',cat:'Info',kind:'site',url:'https://www.cnews.fr/',note:'Le direct officiel peut demander une connexion'}
+  ];
+  var STORAGE = 'minitv-ipad12-v1';
+  var state = {custom:[],fav:[],selected:'',filter:'Toutes'};
+  var video=document.getElementById('video'), shell=document.getElementById('playerShell');
+  var status=document.getElementById('status'), nowTitle=document.getElementById('nowTitle');
+  var selected=null;
+  function load() { try { var s=JSON.parse(localStorage.getItem(STORAGE)||'{}'); if(s && typeof s==='object') {state.custom=Array.isArray(s.custom)?s.custom.slice(0,200):[];state.fav=Array.isArray(s.fav)?s.fav:[];state.selected=s.selected||'';} } catch(e){} }
+  function save() { try {localStorage.setItem(STORAGE,JSON.stringify({custom:state.custom,fav:state.fav,selected:state.selected}));} catch(e){setStatus('Stockage local indisponible : favoris non conservés.',true);} }
+  function list() {return BUILTIN.concat(state.custom);}
+  function find(id) {var arr=list();for(var i=0;i<arr.length;i++) if(arr[i].id===id)return arr[i];return null;}
+  function text(el,value) {el.textContent=value;}
+  function setStatus(msg,bad) {text(status,msg);status.className=bad?'status bad':'status';}
+  function button(label,cls,onClick) {var b=document.createElement('button');b.type='button';b.className=cls;text(b,label);b.addEventListener('click',onClick);return b;}
+  function filters() {var root=document.getElementById('filters');root.innerHTML='';var types=['Toutes','★ Favoris','Info','Culture','Monde','TV','Autres'];types.forEach(function(t){root.appendChild(button(t,'filter'+(state.filter===t?' active':''),function(){state.filter=t;filters();render();}));});}
+  function render() {
+    var root=document.getElementById('channels');root.innerHTML='';var query=document.getElementById('search').value.toLowerCase().trim();var arr=list();var total=0;
+    arr.forEach(function(c){
+      if(query && c.name.toLowerCase().indexOf(query)<0 && c.cat.toLowerCase().indexOf(query)<0) return;
+      if(state.filter==='★ Favoris'&&state.fav.indexOf(c.id)<0) return;
+      if(state.filter!=='Toutes'&&state.filter!=='★ Favoris'&&c.cat!==state.filter)return;
+      total++;
+      var outer=document.createElement('div');outer.style.display='flex';outer.style.alignItems='center';
+      var main=button('','ch'+(state.selected===c.id?' active':''),function(){play(c);});main.style.flex='1';main.style.minWidth='0';
+      var logo=document.createElement('span');logo.className='station-logo';text(logo,c.tag||'TV');
+      var data=document.createElement('span');data.className='ch-data';var n=document.createElement('span');n.className='ch-name';text(n,c.name);var sub=document.createElement('span');sub.className='ch-sub';text(sub,c.kind==='site'?'Lien officiel':c.cat+' · En direct'+(c.note?' · '+c.note:''));data.appendChild(n);data.appendChild(sub);main.appendChild(logo);main.appendChild(data);
+      var fav=button(state.fav.indexOf(c.id)>=0?'★':'☆','fav'+(state.fav.indexOf(c.id)>=0?' on':''),function(){var idx=state.fav.indexOf(c.id);if(idx>=0)state.fav.splice(idx,1);else state.fav.push(c.id);save();render();});fav.setAttribute('aria-label','Favori : '+c.name);
+      outer.appendChild(main);outer.appendChild(fav);root.appendChild(outer);
+    });
+    text(document.getElementById('count'),'('+total+')');
+    if(!total){var p=document.createElement('p');p.className='empty';text(p,'Aucune chaîne trouvée. Ajoute un flux ou importe une playlist M3U.');root.appendChild(p);}
+  }
+  function play(c) {
+    selected=c;state.selected=c.id;save();render();text(nowTitle,c.name);
+    document.getElementById('removeBtn').className = c.id.indexOf('custom-')===0 || c.id.indexOf('import-')===0 ? 'btn secondary' : 'btn secondary hidden';
+    if(c.kind==='site') {
+      video.pause();video.removeAttribute('src');video.load();shell.classList.remove('active');text(document.getElementById('liveTag'),'SITE OFFICIEL');
+      setStatus('Cette chaîne ouvre son site officiel : touche « Ouvrir le direct ».');return;
+    }
+    if(!/^https:\/\//i.test(c.url)) {setStatus('Adresse non sécurisée : utilise un flux HTTPS.',true);return;}
+    shell.classList.add('active');text(document.getElementById('liveTag'),'CHARGEMENT DU DIRECT');setStatus('Connexion directe à '+c.name+'…');
+    video.pause();video.src=c.url;video.load();
+    var attempt=video.play();if(attempt && attempt.catch){attempt.catch(function(){setStatus('Touche ▶ dans le lecteur pour lancer le direct.');});}
+  }
+  video.addEventListener('playing',function(){text(document.getElementById('liveTag'),'EN DIRECT');setStatus('Lecture directe en cours.');});
+  video.addEventListener('waiting',function(){setStatus('Mise en mémoire tampon du flux…');});
+  video.addEventListener('error',function(){if(!selected||selected.kind!=='stream')return;var code=video.error?video.error.code:0;setStatus('Lecture impossible (erreur '+code+'). Flux indisponible, géobloqué ou non compatible avec iOS 12. Essaie « Ouvrir le direct ».',true);});
+  document.getElementById('removeBtn').addEventListener('click',function(){
+    if(!selected || !(selected.id.indexOf('custom-')===0 || selected.id.indexOf('import-')===0))return;
+    if(!window.confirm('Supprimer '+selected.name+' de ta liste ?'))return;
+    var id=selected.id;state.custom=state.custom.filter(function(x){return x.id!==id;});state.fav=state.fav.filter(function(x){return x!==id;});state.selected='';selected=null;save();video.pause();video.removeAttribute('src');video.load();shell.classList.remove('active');
+    document.getElementById('removeBtn').className='btn secondary hidden';text(nowTitle,'Aucune chaîne sélectionnée');text(document.getElementById('liveTag'),'SÉLECTIONNE UNE CHAÎNE');render();setStatus('Chaîne retirée de la liste.');
+  });
+  document.getElementById('reloadBtn').addEventListener('click',function(){if(selected)play(selected);else setStatus('Sélectionne d’abord une chaîne.');});
+  document.getElementById('directBtn').addEventListener('click',function(){if(!selected){setStatus('Sélectionne d’abord une chaîne.');return;}window.open(selected.url,'_blank');});
+  var modal=document.getElementById('modal');
+  function closeModal(){modal.classList.remove('open');}
+  document.getElementById('addBtn').addEventListener('click',function(){modal.classList.add('open');});
+  document.getElementById('cancelBtn').addEventListener('click',closeModal);
+  modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+  document.getElementById('channelForm').addEventListener('submit',function(e){
+    e.preventDefault();var name=document.getElementById('name').value.trim();var url=document.getElementById('address').value.trim();var kind=document.getElementById('kind').value;var cat=document.getElementById('category').value;
+    if(!name||!/^https:\/\/[^\s]+$/i.test(url)){setStatus('Nom et URL HTTPS valides requis.',true);return;}
+    if(state.custom.length>=200){setStatus('Limite de 200 chaînes personnalisées pour ménager la mémoire de cet iPad.',true);return;}
+    var channel={id:'custom-'+Date.now()+'-'+Math.floor(Math.random()*100000),name:name,tag:name.substring(0,3).toUpperCase(),cat:cat,kind:kind,url:url};
+    state.custom.push(channel);save();closeModal();document.getElementById('channelForm').reset();state.filter='Toutes';filters();render();play(channel);
+  });
+  document.getElementById('importBtn').addEventListener('click',function(){document.getElementById('playlistFile').click();});
+  document.getElementById('playlistFile').addEventListener('change',function(evt){
+    var f=evt.target.files&&evt.target.files[0];if(!f)return;
+    if(f.size>300000){setStatus('Playlist volumineuse. Utilise un fichier de moins de 300 Ko pour cet ancien iPad.',true);return;}
+    var reader=new FileReader();reader.onload=function(){
+      var lines=String(reader.result||'').split(/\r?\n/);var name='',cat='TV',added=0,skipped=0,existing={};
+      list().forEach(function(x){existing[x.url]=true;});
+      for(var i=0;i<lines.length;i++){
+        var line=lines[i].trim();if(line.indexOf('#EXTINF:')===0){name=line.split(',').slice(1).join(',').trim()||'Chaîne sans nom';var m=line.match(/group-title="([^"]+)"/i);cat=m?m[1].substring(0,35):'TV';continue;}
+        if(!line||line[0]==='#')continue;
+        if(!/^https:\/\//i.test(line)||existing[line]||state.custom.length>=200){skipped++;name='';continue;}
+        var category=/info|news|actualité/i.test(cat)?'Info':/culture|art/i.test(cat)?'Culture':/world|monde|international/i.test(cat)?'Monde':'TV';
+        var display=(name||'Chaîne '+(added+1)).substring(0,70);
+        state.custom.push({id:'import-'+Date.now()+'-'+i,name:display,tag:display.substring(0,3).toUpperCase(),cat:category,kind:'stream',url:line});existing[line]=true;added++;name='';
+      }
+      save();state.filter='Toutes';filters();render();setStatus(added+' chaîne(s) importée(s). '+skipped+' ignorée(s) (doublon, HTTP ou limite).');
+    };
+    reader.onerror=function(){setStatus('Impossible de lire le fichier M3U.',true);};
+    reader.readAsText(f);evt.target.value='';
+  });
+  document.getElementById('search').addEventListener('input',render);
+  load();filters();render();
+  setStatus('Sélectionne une chaîne. Conseil : commence par France 24 Français.');
+})();
+</script>
+</body>
+</html>
