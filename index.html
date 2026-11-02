@@ -45,10 +45,10 @@ header{border-bottom:1px solid #1b2940;background:#0b101d}.header-inner{max-widt
 <body>
 <header><div class="header-inner"><div class="brand"><span class="logo" aria-hidden="true">▶</span><div><span class="brand-name">MiniTV <em>Live</em></span><span class="brand-byline">LA TV EN TOUTE LIBERTÉ</span></div></div><div class="header-actions"><a class="header-link" href="#catalogue">Les chaînes</a><button type="button" id="importBtn" class="btn light">Importer M3U</button><button type="button" id="addBtn" class="btn primary">+ Chaîne</button></div></div></header>
 <div class="page"><section class="intro"><div><div class="eyebrow">● LA TÉLÉVISION EN DIRECT</div><h1>La TV, tout simplement.</h1><p>Les chaînes que tu aimes, au même endroit, en direct.</p></div><div class="status-bubble">● Direct sur Internet</div></section>
-<div class="watch-layout"><div class="watch-main"><div id="playerHome" class="player-home"><div class="dock-spacer" id="dockSpacer" aria-hidden="true"></div><section class="tvbox" id="tvbox" aria-label="Lecteur TV"><div class="dock-toolbar" id="dockToolbar"><span id="dockTitle" class="dock-title">Direct</span><div class="dock-actions"><button id="restoreBtn" type="button" title="Agrandir le lecteur" aria-label="Agrandir le lecteur">↗</button><button id="closeMiniBtn" type="button" title="Arrêter le direct" aria-label="Arrêter le direct">×</button></div></div><div class="video-wrap" id="videoWrap"><video id="video" controls playsinline webkit-playsinline preload="none" aria-label="Lecture de la chaîne sélectionnée"></video><iframe id="embedPlayer" title="Lecteur du direct" loading="eager" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen frameborder="0" referrerpolicy="strict-origin-when-cross-origin"></iframe><div id="cover" class="play-cover"><span class="play-symbol" aria-hidden="true">▶</span><h2 id="coverTitle" class="cover-title">Prêt pour le direct</h2><div id="coverSub" class="cover-sub">Choisis une chaîne ci-dessous pour regarder la télévision.</div></div></div><div class="player-footer"><div class="current-info"><div class="live-flag" id="liveFlag">PRÊT À REGARDER</div><div class="current-title" id="nowName">Choisis ta chaîne</div></div><div class="player-buttons"><button type="button" id="reloadBtn" class="btn light">↻ Relancer</button></div></div></section></div><div id="playerMessage" class="player-message" role="status" aria-live="polite">Sélectionne une chaîne pour lancer la lecture.</div></div>
+<div class="watch-layout"><div class="watch-main"><div id="playerHome" class="player-home"><div class="dock-spacer" id="dockSpacer" aria-hidden="true"></div><section class="tvbox" id="tvbox" aria-label="Lecteur TV"><div class="dock-toolbar" id="dockToolbar"><span id="dockTitle" class="dock-title">Direct</span><div class="dock-actions"><button id="dockSourceBtn" type="button" title="Essayer une autre source" aria-label="Source suivante" style="display:none">⇄</button><button id="restoreBtn" type="button" title="Agrandir le lecteur" aria-label="Agrandir le lecteur">↗</button><button id="closeMiniBtn" type="button" title="Arrêter le direct" aria-label="Arrêter le direct">×</button></div></div><div class="video-wrap" id="videoWrap"><video id="video" controls playsinline webkit-playsinline preload="none" aria-label="Lecture de la chaîne sélectionnée"></video><iframe id="embedPlayer" title="Lecteur du direct" loading="eager" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen frameborder="0" referrerpolicy="strict-origin-when-cross-origin"></iframe><div id="cover" class="play-cover"><span class="play-symbol" aria-hidden="true">▶</span><h2 id="coverTitle" class="cover-title">Prêt pour le direct</h2><div id="coverSub" class="cover-sub">Choisis une chaîne ci-dessous pour regarder la télévision.</div></div></div><div class="player-footer"><div class="current-info"><div class="live-flag" id="liveFlag">PRÊT À REGARDER</div><div class="current-title" id="nowName">Choisis ta chaîne</div></div><div class="player-buttons"><button type="button" id="sourceBtn" class="btn light" style="display:none">⇄ Source suivante</button><button type="button" id="reloadBtn" class="btn light">↻ Relancer</button></div></div></section></div><div id="playerMessage" class="player-message" role="status" aria-live="polite">Sélectionne une chaîne pour lancer la lecture.</div></div>
 <aside class="watch-rail"><div class="rail-head"><span class="section-mini">À regarder maintenant</span><span class="rail-sub">Choisis un direct</span></div><div class="rail-list" id="quickList"></div></aside></div>
-<section class="catalogue" id="catalogue"><div class="catalog-head"><div><h2>Toutes les chaînes <span id="countLabel" style="color:#7ea8d9;font-size:14px"></span></h2><p>Un catalogue épuré. Uniquement des directs intégrés.</p></div><div class="catalog-tools"><button type="button" id="resetBtn" class="reset-link" title="Effacer les anciennes chaînes ajoutées et les favoris">↻ Nettoyer ma liste</button><label for="searchInput" class="sr-only">Rechercher une chaîne</label><input id="searchInput" class="search" type="search" placeholder="⌕  Rechercher une chaîne" autocomplete="off"></div></div><div id="categories" class="categories" role="group" aria-label="Filtrer par catégorie"></div><div id="cards" class="cards"></div></section>
-<footer class="foot">MiniTV Live est un lecteur TV indépendant. Les vidéos sont lues directement sur ton appareil, sans relais vidéo. Les flux peuvent être indisponibles ou géobloqués. La liste personnelle et les favoris sont conservés uniquement sur cet appareil. Aucun contenu protégé n'est contourné.</footer>
+<section class="catalogue" id="catalogue"><div class="catalog-head"><div><h2>Toutes les chaînes <span id="countLabel" style="color:#7ea8d9;font-size:14px"></span></h2><p>Des directs intégrés, avec source de secours quand elle existe.</p></div><div class="catalog-tools"><button type="button" id="resetBtn" class="reset-link" title="Effacer les anciennes chaînes ajoutées et les favoris">↻ Nettoyer ma liste</button><label for="searchInput" class="sr-only">Rechercher une chaîne</label><input id="searchInput" class="search" type="search" placeholder="⌕  Rechercher une chaîne" autocomplete="off"></div></div><div id="categories" class="categories" role="group" aria-label="Filtrer par catégorie"></div><div id="cards" class="cards"></div></section>
+<footer class="foot">MiniTV Live est un lecteur TV indépendant. Les sources alternatives sont des essais, pas une garantie de lecture. Les vidéos sont lues directement sur ton appareil, sans relais vidéo. Les flux peuvent être indisponibles ou géobloqués. La liste personnelle et les favoris sont conservés uniquement sur cet appareil. Aucun contenu protégé n'est contourné.</footer>
 </div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="dialog"><h2 id="modalTitle">Ajouter une chaîne</h2><p>Ajoute une adresse vidéo HLS autorisée en HTTPS (fichier .m3u8).</p><form id="channelForm"><div class="field"><label for="channelName">Nom de la chaîne</label><input id="channelName" maxlength="70" required placeholder="Ex. Ma chaîne"></div><div class="field"><label for="channelURL">Adresse HTTPS</label><input id="channelURL" required type="url" placeholder="https://exemple.tv/direct.m3u8"></div><div class="field"><label for="channelCategory">Catégorie</label><select id="channelCategory"><option>TV</option><option>Info</option><option>Culture</option><option>Monde</option><option>Suriname</option><option>Autres</option></select></div><div class="dialog-actions"><button type="button" id="cancelBtn" class="btn light">Annuler</button><button type="submit" class="btn primary">Ajouter</button></div></form></div></div>
 <input type="file" id="playlistFile" accept=".m3u,.m3u8,audio/x-mpegurl,text/plain" class="sr-only">
@@ -57,19 +57,20 @@ header{border-bottom:1px solid #1b2940;background:#0b101d}.header-inner{max-widt
 var channels=[
 {id:'fr24',name:'France 24 Français',tag:'F24',cat:'Info',kind:'stream',url:'https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_900.m3u8',colors:['#123e75','#1c79d1']},
 {id:'fr24en',name:'France 24 English',tag:'F24',cat:'Monde',kind:'stream',url:'https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_5000.m3u8',colors:['#17508d','#3898d9']},
-{id:'arte',name:'ARTE',tag:'ARTE',cat:'Culture',kind:'stream',url:'https://artesimulcast.akamaized.net/hls/live/2031003/artelive_fr/index.m3u8',colors:['#d8501a','#f29a47']},
-{id:'bfm',name:'BFM TV',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8',colors:['#133b90','#2370cd']},
-{id:'bfmbusiness',name:'BFM Business',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8',colors:['#124578','#438abf']},
+{id:'arte',name:'ARTE',tag:'ARTE',cat:'Culture',kind:'stream',note:'Ce direct est soumis à des restrictions géographiques',url:'https://artesimulcast.akamaized.net/hls/live/2031003/artelive_fr/index.m3u8',colors:['#d8501a','#f29a47']},
+{id:'bfm',name:'BFM TV',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8',alternates:[{kind:'stream',url:'https://ncdn-live-bfm.pfd.sfr.net/shls/LIVE$BFM_TV/index.m3u8?end=END&start=LIVE'}],colors:['#133b90','#2370cd']},
+{id:'bfmbusiness',name:'BFM Business',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8',alternates:[{kind:'stream',url:'https://ncdn-live-bfm.pfd.sfr.net/shls/LIVE$BFM_BUSINESS/index.m3u8?end=END&start=LIVE'}],colors:['#124578','#438abf']},
 {id:'20minutes',name:'20 Minutes TV',tag:'20M',cat:'TV',kind:'stream',url:'https://live-20minutestv.digiteka.com/1961167769/index.m3u8',colors:['#286f96','#4dacc6']},
-{id:'cnews',name:'CNEWS',tag:'C',cat:'Info',kind:'embed',url:'https://www.dailymotion.com/embed/video/x3b68jn',colors:['#751d2d','#cb3748']},
-{id:'atv1-sr',name:'ATV 1',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://live.suricloud.com/hls/atv1/index.m3u8',colors:['#864713','#ce8a3e']},
-{id:'atv2-sr',name:'ATV 2',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://ts.suricloud.com:5443/atvlive/streams/atv2.m3u8',colors:['#805318','#c48f4b']},
-{id:'atv3-sr',name:'ATV 3',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://ts.suricloud.com:5443/atvlive/streams/atv3.m3u8',colors:['#8b5517','#d3a151']},
+{id:'cnews',name:'CNEWS',tag:'C',cat:'Info',kind:'embed',url:'https://geo.dailymotion.com/player.html?video=x3b68jn',alternates:[{kind:'embed',url:'https://www.dailymotion.com/embed/video/x3b68jn'}],colors:['#751d2d','#cb3748']},
+{id:'atv1-sr',name:'ATV 1',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://live.suricloud.com/hls/atv1/index.m3u8',alternates:[{kind:'embed',url:'https://ts.suricloud.com/atv1/embed.html'}],colors:['#864713','#ce8a3e']},
+{id:'atv2-sr',name:'ATV 2',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://ts.suricloud.com:5443/atvlive/streams/atv2.m3u8',alternates:[{kind:'embed',url:'https://ts.suricloud.com/atv2/embed.html'}],colors:['#805318','#c48f4b']},
+{id:'atv3-sr',name:'ATV 3',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://ts.suricloud.com:5443/atvlive/streams/atv3.m3u8',alternates:[{kind:'embed',url:'https://ts.suricloud.com/atv3/embed.html'}],colors:['#8b5517','#d3a151']},
 {id:'shalom-sr',name:'Shalom TV',tag:'SH',cat:'Suriname',kind:'stream',url:'https://media.streambrothers.com:1936/8400/8400/playlist.m3u8',colors:['#465b23','#7c9f41']}
 ];
 var storageKey='minitv-live-v5-clean',state={custom:[],fav:[],selected:'',filter:'Toutes'};
 var video=document.getElementById('video'),frame=document.getElementById('embedPlayer'),wrap=document.getElementById('videoWrap'),selected=null;
 var hasPlayback=false,dockHidden=false,isFloating=false;
+var sourceIndex=0, sourceGeneration=0, sourceTimer=null, currentStatus='';
 function el(id){return document.getElementById(id)}
 function setText(node,t){node.textContent=t}
 function say(t,isError){setText(el('playerMessage'),t);el('playerMessage').className='player-message'+(isError?' error':'')}
@@ -84,18 +85,63 @@ function onButton(t,cl,fn){var b=dom('button',cl,t);b.type='button';b.addEventLi
 function tint(c){var cs=c.colors||['#293b60','#485b8d'];return 'linear-gradient(125deg,'+cs[0]+','+cs[1]+')'}
 function starred(id){return state.fav.indexOf(id)>=0}
 function fav(id){var pos=state.fav.indexOf(id);if(pos>=0)state.fav.splice(pos,1);else state.fav.push(id);save();render()}
-function go(c){
- hasPlayback=false;dockHidden=false;setFloating(false);
- selected=c;state.selected=c.id;save();setText(el('nowName'),c.name);setText(el('dockTitle'),c.name);render();video.pause();video.removeAttribute('src');video.load();
+function sourcesFor(c){return [{kind:c.kind,url:c.url}].concat(c.alternates||[])}
+function clearSourceTimer(){if(sourceTimer){clearTimeout(sourceTimer);sourceTimer=null}}
+function sourceNotice(text,isError){currentStatus=text;say(text,isError)}
+function sourceCounter(){return (sourceIndex+1)+'/'+sourcesFor(selected).length}
+function syncSourceButton(){
+ var b=el('sourceBtn');if(!selected||sourcesFor(selected).length<2){b.style.display='none';el('dockSourceBtn').style.display='none';return}
+ b.style.display='inline-block';b.textContent='⇄ Source suivante ('+sourceCounter()+')';
+ var dock=el('dockSourceBtn');dock.style.display='inline-block';dock.title='Source suivante ('+sourceCounter()+')';
+}
+function activateSource(index,reason){
+ if(!selected)return;
+ clearSourceTimer();sourceGeneration++;
+ var generation=sourceGeneration,c=selected,arr=sourcesFor(c),src=arr[index];
+ if(!src)return;
+ sourceIndex=index;syncSourceButton();hasPlayback=false;refreshFloating();
+ // Never detach the player: this also preserves the floating window.
+ video.pause();video.removeAttribute('src');video.load();
  frame.removeAttribute('src');
- if(c.kind==='embed'){
-   wrap.className='video-wrap is-embed';setText(el('liveFlag'),'LECTEUR EN DIRECT');
-   say('Lecteur CNEWS intégré. Appuie sur ▶ dans le lecteur.');
-   frame.src=c.url;return;
+ if(src.kind==='embed'){
+   wrap.className='video-wrap is-embed';
+   setText(el('liveFlag'),'LECTEUR INTÉGRÉ');
+   sourceNotice(c.name+' : lecteur intégré ('+sourceCounter()+'). Appuie sur ▶. Le chargement du cadre ne prouve pas la lecture.',false);
+   frame.src=src.url;
+   return;
  }
- if(!/^https:\/\//i.test(c.url)){say('Adresse vidéo HTTPS requise.',true);return}
- wrap.className='video-wrap is-video';setText(el('liveFlag'),'CONNEXION AU DIRECT');say('Connexion à '+c.name+'…');video.src=c.url;video.load();
- var promise=video.play();if(promise&&promise.catch)promise.catch(function(){if(selected===c)say('Touche ▶ dans le lecteur pour démarrer la vidéo.')});
+ if(!/^https:\/\//i.test(src.url)){sourceNotice('Adresse de direct non sécurisée.',true);return}
+ wrap.className='video-wrap is-video';
+ setText(el('liveFlag'),'CONNEXION AU DIRECT');
+ sourceNotice(c.name+' : connexion au flux '+sourceCounter()+(reason?' — '+reason:'')+'…',false);
+ video.src=src.url;video.load();
+ sourceTimer=setTimeout(function(){
+   if(generation!==sourceGeneration||selected!==c||video.readyState>=2)return;
+   nextSource('Aucune donnée vidéo après 18 s');
+ },18000);
+ var attempt=video.play();
+ if(attempt&&attempt.catch)attempt.catch(function(err){
+   if(generation!==sourceGeneration||selected!==c)return;
+   if(err&&err.name==='NotAllowedError')sourceNotice('Appuie sur ▶ pour autoriser la lecture du flux '+sourceCounter()+'.',false);
+   else if(err&&err.name==='NotSupportedError')nextSource('Format ou source non pris en charge');
+   else if(err&&err.name!=='AbortError')sourceNotice('Démarrage à vérifier : '+(err.name||'erreur')+'. Essaie ▶ ou Source suivante.',true);
+ });
+}
+function nextSource(reason){
+ if(!selected)return;
+ var total=sourcesFor(selected).length;
+ if(sourceIndex+1<total){activateSource(sourceIndex+1,reason||'essai de secours');return}
+ clearSourceTimer();hasPlayback=false;refreshFloating();
+ var suffix=selected.id==='arte'?' ARTE peut être géobloquée dans ton pays.':'';
+ sourceNotice(selected.name+' : aucune des '+total+' source(s) n’a été confirmée. '+(reason||'Lecteur indisponible')+'.'+suffix+' Vérifie ton réseau ou réessaie plus tard.',true);
+ setText(el('liveFlag'),'LECTURE NON CONFIRMÉE');
+}
+function go(c){
+ clearSourceTimer();sourceGeneration++;
+ dockHidden=false;hasPlayback=false;setFloating(false);
+ selected=c;state.selected=c.id;save();
+ setText(el('nowName'),c.name);setText(el('dockTitle'),c.name);render();
+ activateSource(0);
 }
 function renderCategories(){var root=el('categories');root.innerHTML='';var cats=['Toutes','★ Favoris','Suriname','Info','Culture','Monde','TV','Autres'];for(var i=0;i<cats.length;i++)(function(cat){var b=onButton(cat,'pill'+(state.filter===cat?' active':''),function(){state.filter=cat;renderCategories();renderCards()});root.appendChild(b)})(cats[i])}
 function renderCards(){var root=el('cards');root.innerHTML='';var search=el('searchInput').value.toLowerCase().trim();var matches=0;all().forEach(function(c){
@@ -113,13 +159,35 @@ function renderCards(){var root=el('cards');root.innerHTML='';var search=el('sea
  });setText(el('countLabel'),'('+matches+')');if(matches===0)root.appendChild(dom('div','no-results','Aucune chaîne trouvée. Essaie un autre filtre ou ajoute ta chaîne.'))}
 function renderQuick(){var root=el('quickList');root.innerHTML='';var ids=['fr24','cnews','atv1-sr','arte','bfm'];ids.forEach(function(id){var c=getById(id);if(!c)return;var b=onButton('','rail-item'+(selected&&selected.id===id?' active':''),function(){go(c);if(window.innerWidth<821){el('videoWrap').scrollIntoView()}});var logo=dom('span','rail-logo',c.tag);logo.style.background=tint(c);b.appendChild(logo);var info=dom('span','rail-info');info.appendChild(dom('span','rail-name',c.name));info.appendChild(dom('span','rail-type',c.cat+' · En direct'));b.appendChild(info);b.appendChild(dom('span','rail-arrow','›'));root.appendChild(b)})}
 function render(){renderCards();renderQuick()}
-video.addEventListener('playing',function(){if(selected&&selected.kind==='stream'){hasPlayback=true;setText(el('liveFlag'),'EN DIRECT');say('Lecture en cours : '+selected.name);refreshFloating()}});
-video.addEventListener('pause',function(){if(selected&&selected.kind==='stream'){hasPlayback=false;refreshFloating()}});
+video.addEventListener('playing',function(){
+ if(selected&&sourcesFor(selected)[sourceIndex].kind==='stream'){
+   clearSourceTimer();hasPlayback=true;setText(el('liveFlag'),'EN DIRECT');
+   sourceNotice('Lecture en cours : '+selected.name+' (source '+sourceCounter()+').',false);refreshFloating();
+ }
+});
+video.addEventListener('pause',function(){
+ if(selected&&sourcesFor(selected)[sourceIndex].kind==='stream'){hasPlayback=false;refreshFloating()}
+});
 video.addEventListener('ended',function(){hasPlayback=false;refreshFloating()});
-frame.addEventListener('load',function(){if(selected&&selected.kind==='embed'&&frame.getAttribute('src')){hasPlayback=true;refreshFloating()}});
-
-video.addEventListener('waiting',function(){if(selected&&selected.kind==='stream')say('Chargement du direct…')});
-video.addEventListener('error',function(){if(selected&&selected.kind==='stream'){hasPlayback=false;refreshFloating();say('Direct indisponible ou incompatible. Choisis une autre chaîne.',true)}});
+frame.addEventListener('load',function(){
+ if(selected&&sourcesFor(selected)[sourceIndex].kind==='embed'&&frame.getAttribute('src')){
+   // An iframe load indicates page load, NOT successful video playback.
+   hasPlayback=true;setText(el('liveFlag'),'LECTEUR CHARGÉ');
+   sourceNotice(selected.name+' : lecteur chargé. Appuie sur ▶ ; si écran noir, essaie « Source suivante ».',false);
+   refreshFloating();
+ }
+});
+frame.addEventListener('error',function(){
+ if(selected&&sourcesFor(selected)[sourceIndex].kind==='embed')nextSource('Échec de chargement du lecteur');
+});
+video.addEventListener('waiting',function(){
+ if(selected&&sourcesFor(selected)[sourceIndex].kind==='stream')sourceNotice('Mise en mémoire tampon : '+selected.name+' (source '+sourceCounter()+')…',false);
+});
+video.addEventListener('error',function(){
+ if(!selected||sourcesFor(selected)[sourceIndex].kind!=='stream')return;
+ var code=video.error?video.error.code:'inconnu';
+ nextSource('Erreur vidéo '+code);
+});
 
 /* Le lecteur passe en surimpression lorsque sa position naturelle sort en haut. */
 function setFloating(on){
@@ -148,11 +216,12 @@ el('restoreBtn').addEventListener('click',function(){
  window.scrollTo(0,Math.max(0,y));refreshFloating();
 });
 function stopDirect(){
+ clearSourceTimer();sourceGeneration++;sourceIndex=0;
  hasPlayback=false;dockHidden=false;setFloating(false);
  selected=null;state.selected='';save();
  video.pause();video.removeAttribute('src');video.load();frame.removeAttribute('src');
  wrap.className='video-wrap';setText(el('nowName'),'Choisis ta chaîne');setText(el('liveFlag'),'PRÊT À REGARDER');
- say('Direct arrêté. Choisis une chaîne pour regarder la télévision.');render();
+ say('Direct arrêté. Choisis une chaîne pour regarder la télévision.');syncSourceButton();render();
 }
 el('closeMiniBtn').addEventListener('click',stopDirect);
 el('resetBtn').addEventListener('click',function(){
@@ -161,6 +230,9 @@ el('resetBtn').addEventListener('click',function(){
  el('searchInput').value='';renderCategories();render();say('Liste nettoyée : seules les chaînes du catalogue sont affichées.');
 });
 el('reloadBtn').addEventListener('click',function(){if(selected)go(selected);else say('Choisis une chaîne ci-dessous.')});
+function switchSource(){if(!selected)return;var next=(sourceIndex+1)%sourcesFor(selected).length;activateSource(next,'sélection manuelle')}
+el('sourceBtn').addEventListener('click',switchSource);
+el('dockSourceBtn').addEventListener('click',switchSource);
 el('searchInput').addEventListener('input',renderCards);
 var modal=el('modal');el('addBtn').addEventListener('click',function(){modal.className='modal open'});el('cancelBtn').addEventListener('click',function(){modal.className='modal'});modal.addEventListener('click',function(e){if(e.target===modal)modal.className='modal'});
 el('channelForm').addEventListener('submit',function(e){e.preventDefault();var name=el('channelName').value.trim(),url=el('channelURL').value.trim();if(!name||!/^https:\/\/[^\s]+$/i.test(url)||!/\.(m3u8|mp4)(?:[?#]|$)/i.test(url)){say('Ajoute un lien direct .m3u8 ou .mp4 en HTTPS.',true);return}if(state.custom.length>=200){say('La limite de 200 chaînes personnelles est atteinte.',true);return}var c={id:'custom-'+Date.now()+'-'+Math.floor(Math.random()*99999),name:name,cat:el('channelCategory').value,kind:'stream',url:url,tag:name.substr(0,4).toUpperCase()};state.custom.push(c);modal.className='modal';el('channelForm').reset();state.filter='Toutes';save();renderCategories();render();go(c)});

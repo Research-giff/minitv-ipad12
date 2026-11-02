@@ -1,20 +1,21 @@
-# MiniTV Live v5 — mini-lecteur flottant et catalogue propre
+# MiniTV Live v6 — dépannage des directs
 
-## Changements
+Version v5 conservée visuellement, avec 11 chaînes intégrées et favoris préservés dans `minitv-live-v5-clean`.
 
-- Mini-lecteur flottant en bas à droite dès que l'utilisateur descend et que le direct est lancé (HLS), ou que le lecteur CNEWS a chargé son contenu.
-- Aucun lecteur dupliqué : le même élément vidéo ou la même iframe reste actif pendant le défilement.
-- Icônes : agrandir (↗) retourne au lecteur principal ; fermer (×) arrête la lecture et ferme le mini-lecteur.
-- Version de stockage local neuve (`minitv-live-v5-clean`), sans réimporter les anciennes chaînes et favoris obsolètes.
-- Bouton `Nettoyer ma liste` pour supprimer les imports et favoris de la version courante.
-- Catalogue initial : France 24 FR/EN, ARTE, BFM TV, BFM Business, 20 Minutes TV, CNEWS (iframe Dailymotion), ATV 1/2/3 et Shalom TV du Suriname.
-- Pas de Trishul, Africanews, Africa 24, ni de liens vers des sites servant de substituts au direct.
-- Aucune mention de modèle d’appareil ou de navigateur dans l’interface grand public.
+## Changement de lecture
 
-Les liens vidéo sont fournis à titre de lecture ; une vérification syntaxique ne démontre ni leur accessibilité permanente ni leur décodage sur un appareil précis. Le lecteur CNEWS hébergé par Dailymotion peut refuser certains navigateurs. La fenêtre flottante fonctionne dans la page web ; elle ne reste pas au-dessus des autres applications.
+- CNEWS : lecteur Dailymotion direct, endpoint `geo.dailymotion.com/player.html?video=x3b68jn` et possibilité de basculer manuellement vers le lecteur hérité. Le contenu est fourni par le compte officiel CNEWS ; nous ne contrôlons ni son lecteur ni sa compatibilité.
+- BFM TV et BFM Business : leur flux existant reste la source principale ; un flux SFR public documenté est ajouté comme source de secours. L'accessibilité varie.
+- ATV 1, ATV 2 et ATV 3 : HLS historique conservé, secours via les lecteurs ATV relayés par Suricloud/Telesur. La compatibilité en iframe n'est pas garantie.
+- ARTE : HLS d'origine conservé. Certains programmes ou flux sont soumis au géoblocage, aucune méthode de contournement intégrée.
+- Autres chaînes et favoris : inchangés.
 
-## Installation
+## Diagnostic et limites
 
-Décompresser le ZIP et lancer `bash minitv-live-v5/publier.sh` depuis le dossier de Téléchargements. Le script vérifie le contenu distant après publication. Ouvrir `https://research-giff.github.io/minitv-ipad12/?v=5`.
-
-Les favoris et listes personnalisées précédentes ne sont pas restaurés volontairement dans la v5, afin de garantir le nettoyage. Les données anciennes ne sont pas effacées physiquement du navigateur.
+- Le message sous le lecteur indique **la source essayée** et l'erreur vidéo (code 1/2/3/4, etc.).
+- Au bout de 18 secondes sans données, un flux HLS non chargé bascule sur le secours s'il existe.
+- Le bouton **« Source suivante »** permet de changer manuellement de source ; utile pour CNEWS et les lecteurs IPTV.
+- Le chargement d'un lecteur intégré (iframe) ne prouve **pas** qu'une vidéo est en cours.
+- Aucune lecture n'a été vérifiée physiquement sur le matériel de l'utilisateur : tests de code et d'interface uniquement.
+- Les flux HTTP, protégés par DRM, ou avec compte ne sont pas contournés.
+- L'application est une interface statique sur GitHub Pages : aucune vidéo ne passe par le Raspberry Pi.
