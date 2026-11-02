@@ -1,22 +1,16 @@
-# MiniTV Live v7 — sources IPTV et reprise des directs
+# MiniTV Live v8 — diagnostic de lecture et moteur HLS
 
-Interface de v6 et fenêtres flottantes conservées. Le catalogue passe de 11 à 13 entrées.
+Cette version corrige le lecteur, sans changer l’interface ni supprimer des chaînes ou favoris.
 
-## Changements
+- Ajout de hls.js 1.5.20, chargé uniquement lorsque le navigateur ne prend pas en charge HLS nativement. Deux CDN publics servent de redondance, et aucune requête n’est nécessaire sur Safari natif.
+- BFM TV / BFM Business : sources d’origine et secours conservés, désormais exploitables sur Chrome/Firefox si les serveurs et règles CORS le permettent.
+- CNEWS : le HLS CANAL+ reste comme source candidate. Les embeds Dailymotion legacy sans Player ID ont été retirés car ils renvoient HTTP 403 (exigence Dailymotion septembre 2026). La chaîne demeure visible, mais la disponibilité directe n’est pas garantie.
+- Sur les iframes, « page chargée » ne signifie plus « lecture confirmée ». Le mini-lecteur ne flotte qu’après l’événement de lecture vidéo confirmée.
+- L’application affiche des raisons concrètes lorsqu’un flux HLS échoue (réseau, CORS, manifeste, codec).
+- Tous les 13 canaux et les favoris (`minitv-live-v5-clean`) sont préservés. Rien n’est retransmis par le Raspberry Pi.
 
-- **BFM TV** : conserve le flux CDN existant, le secours SFR présent en v6, ajoute une troisième URL CDN CloudFront citée par une playlist tierce.
-- **BFM Business** : conserve les deux sources (CDN et SFR). L'URL SFR est déjà dans v6 et n'est pas importée une seconde fois.
-- **CNEWS** : essai HLS depuis le domaine CDN CANAL+, puis deux lecteurs Dailymotion intégrés. Le flux CANAL+ peut nécessiter un jeton, être géobloqué ou échouer ; il n'est pas certifié fonctionnel.
-- **20 Minutes TV** : secours Digiteka tiré de `garelp/iptv-playlists/fr.m3u`.
-- **Euronews Français et TV5MONDE Info** : deux flux directs HTTPS supplémentaires répertoriés publiquement ; disponibilité non garantie, TV5MONDE peut être géobloqué.
-- **ATV, ARTE, Shalom, France 24 et favoris** : préservés, même identifiants et même stockage local.
+## Limites
 
-## Sources consultées
+Il n’est pas possible de transformer un 403 du diffuseur en autorisation d’accès. Aucune lecture réelle sur le matériel de l’utilisateur n’a été démontrée. L’utilisation d’un CDN hls.js nécessite un accès Internet et peut être bloquée par un filtrage réseau.
 
-- https://github.com/garelp/iptv-playlists/blob/main/fr.m3u
-- https://github.com/Fraewin/iptv/blob/main/playlist.m3u
-- https://github.com/Free-TV/IPTV/blob/master/lists/france.md
-
-La playlist CNEWS du dépôt `garelp` pointe vers un fichier GitHub 404 et n'est **pas** réutilisée. Aucun accès IPTV privé ou chaîne payante ne fait partie de ce correctif. Une URL publiée sur GitHub n'est ni une garantie de lecture ni une licence de redistribution.
-
-Les sources ont été vérifiées **statiquement** dans des catalogues publics ; leur lecture HTTP réelle et leur décodage sur l'appareil ne sont pas confirmés. Dans MiniTV, utiliser « Source suivante » si un flux échoue.
+Sources : https://developers.dailymotion.com/changelog/api-player-id-required-in-embed-urls ; https://github.com/video-dev/hls.js

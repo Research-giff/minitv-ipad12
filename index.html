@@ -44,7 +44,7 @@ header{border-bottom:1px solid #1b2940;background:#0b101d}.header-inner{max-widt
 </head>
 <body>
 <header><div class="header-inner"><div class="brand"><span class="logo" aria-hidden="true">▶</span><div><span class="brand-name">MiniTV <em>Live</em></span><span class="brand-byline">LA TV EN TOUTE LIBERTÉ</span></div></div><div class="header-actions"><a class="header-link" href="#catalogue">Les chaînes</a><button type="button" id="importBtn" class="btn light">Importer M3U</button><button type="button" id="addBtn" class="btn primary">+ Chaîne</button></div></div></header>
-<div class="page"><section class="intro"><div><div class="eyebrow">● LA TÉLÉVISION EN DIRECT</div><h1>La TV, tout simplement.</h1><p>Les chaînes que tu aimes, au même endroit, en direct.</p></div><div class="status-bubble">● Direct sur Internet</div></section>
+<div class="page"><section class="intro"><div><div class="eyebrow">● LA TÉLÉVISION EN DIRECT</div><h1>La TV, tout simplement.</h1><p>Les chaînes que tu aimes, au même endroit, en direct.</p></div><div class="status-bubble">● Accès aux directs</div></section>
 <div class="watch-layout"><div class="watch-main"><div id="playerHome" class="player-home"><div class="dock-spacer" id="dockSpacer" aria-hidden="true"></div><section class="tvbox" id="tvbox" aria-label="Lecteur TV"><div class="dock-toolbar" id="dockToolbar"><span id="dockTitle" class="dock-title">Direct</span><div class="dock-actions"><button id="dockSourceBtn" type="button" title="Essayer une autre source" aria-label="Source suivante" style="display:none">⇄</button><button id="restoreBtn" type="button" title="Agrandir le lecteur" aria-label="Agrandir le lecteur">↗</button><button id="closeMiniBtn" type="button" title="Arrêter le direct" aria-label="Arrêter le direct">×</button></div></div><div class="video-wrap" id="videoWrap"><video id="video" controls playsinline webkit-playsinline preload="none" aria-label="Lecture de la chaîne sélectionnée"></video><iframe id="embedPlayer" title="Lecteur du direct" loading="eager" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen frameborder="0" referrerpolicy="strict-origin-when-cross-origin"></iframe><div id="cover" class="play-cover"><span class="play-symbol" aria-hidden="true">▶</span><h2 id="coverTitle" class="cover-title">Prêt pour le direct</h2><div id="coverSub" class="cover-sub">Choisis une chaîne ci-dessous pour regarder la télévision.</div></div></div><div class="player-footer"><div class="current-info"><div class="live-flag" id="liveFlag">PRÊT À REGARDER</div><div class="current-title" id="nowName">Choisis ta chaîne</div></div><div class="player-buttons"><button type="button" id="sourceBtn" class="btn light" style="display:none">⇄ Source suivante</button><button type="button" id="reloadBtn" class="btn light">↻ Relancer</button></div></div></section></div><div id="playerMessage" class="player-message" role="status" aria-live="polite">Sélectionne une chaîne pour lancer la lecture.</div></div>
 <aside class="watch-rail"><div class="rail-head"><span class="section-mini">À regarder maintenant</span><span class="rail-sub">Choisis un direct</span></div><div class="rail-list" id="quickList"></div></aside></div>
 <section class="catalogue" id="catalogue"><div class="catalog-head"><div><h2>Toutes les chaînes <span id="countLabel" style="color:#7ea8d9;font-size:14px"></span></h2><p>Des directs intégrés, avec source de secours quand elle existe.</p></div><div class="catalog-tools"><button type="button" id="resetBtn" class="reset-link" title="Effacer les anciennes chaînes ajoutées et les favoris">↻ Nettoyer ma liste</button><label for="searchInput" class="sr-only">Rechercher une chaîne</label><input id="searchInput" class="search" type="search" placeholder="⌕  Rechercher une chaîne" autocomplete="off"></div></div><div id="categories" class="categories" role="group" aria-label="Filtrer par catégorie"></div><div id="cards" class="cards"></div></section>
@@ -61,7 +61,7 @@ var channels=[
 {id:'bfm',name:'BFM TV',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8',alternates:[{kind:'stream',url:'https://ncdn-live-bfm.pfd.sfr.net/shls/LIVE$BFM_TV/index.m3u8?end=END&start=LIVE'},{kind:'stream',url:'https://d133u1kwyeqhav.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-cfh0ys5588w7f/index.m3u8'}],colors:['#133b90','#2370cd']},
 {id:'bfmbusiness',name:'BFM Business',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8',alternates:[{kind:'stream',url:'https://ncdn-live-bfm.pfd.sfr.net/shls/LIVE$BFM_BUSINESS/index.m3u8?end=END&start=LIVE'}],colors:['#124578','#438abf']},
 {id:'20minutes',name:'20 Minutes TV',tag:'20M',cat:'TV',kind:'stream',url:'https://live-20minutestv.digiteka.com/1961167769/index.m3u8',alternates:[{kind:'stream',url:'https://lives.digiteka.com/stream/86d3e867-a272-496b-8412-f59aa0104771/index.m3u8'}],colors:['#286f96','#4dacc6']},
-{id:'cnews',name:'CNEWS',tag:'C',cat:'Info',kind:'stream',url:'https://hls-m010-live-aka-canalplus.akamaized.net/live/disk/cnews-clair-hd/hls-v3-hd-clair/cnews-clair-hd.m3u8',alternates:[{kind:'embed',url:'https://geo.dailymotion.com/player.html?video=x3b68jn'},{kind:'embed',url:'https://www.dailymotion.com/embed/video/x3b68jn'}],colors:['#751d2d','#cb3748']},
+{id:'cnews',name:'CNEWS',tag:'C',cat:'Info',kind:'stream',note:'Le direct peut refuser une lecture depuis un site externe',url:'https://hls-m010-live-aka-canalplus.akamaized.net/live/disk/cnews-clair-hd/hls-v3-hd-clair/cnews-clair-hd.m3u8',colors:['#751d2d','#cb3748']},
 {id:'atv1-sr',name:'ATV 1',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://live.suricloud.com/hls/atv1/index.m3u8',alternates:[{kind:'embed',url:'https://ts.suricloud.com/atv1/embed.html'}],colors:['#864713','#ce8a3e']},
 {id:'atv2-sr',name:'ATV 2',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://ts.suricloud.com:5443/atvlive/streams/atv2.m3u8',alternates:[{kind:'embed',url:'https://ts.suricloud.com/atv2/embed.html'}],colors:['#805318','#c48f4b']},
 {id:'atv3-sr',name:'ATV 3',tag:'ATV',cat:'Suriname',kind:'stream',url:'https://ts.suricloud.com:5443/atvlive/streams/atv3.m3u8',alternates:[{kind:'embed',url:'https://ts.suricloud.com/atv3/embed.html'}],colors:['#8b5517','#d3a151']},
@@ -73,6 +73,29 @@ var storageKey='minitv-live-v5-clean',state={custom:[],fav:[],selected:'',filter
 var video=document.getElementById('video'),frame=document.getElementById('embedPlayer'),wrap=document.getElementById('videoWrap'),selected=null;
 var hasPlayback=false,dockHidden=false,isFloating=false;
 var sourceIndex=0, sourceGeneration=0, sourceTimer=null, currentStatus='';
+// HLS natif sur Safari, hls.js 1.5.20 uniquement sur navigateurs qui n'ont pas de HLS natif.
+var hlsEngine=null,hlsLibraryState='none',hlsLibraryWaiters=[];
+function destroyHls(){if(hlsEngine){try{hlsEngine.destroy()}catch(e){}hlsEngine=null}}
+function loadHlsLibrary(done){
+ if(window.Hls&&window.Hls.isSupported()){hlsLibraryState='ready';done(true);return}
+ if(hlsLibraryState==='failed'){done(false);return}
+ hlsLibraryWaiters.push(done);
+ if(hlsLibraryState==='loading')return;
+ hlsLibraryState='loading';
+ var urls=['https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js','https://unpkg.com/hls.js@1.5.20/dist/hls.min.js'];
+ function finished(ok){hlsLibraryState=ok?'ready':'failed';var todo=hlsLibraryWaiters.splice(0);todo.forEach(function(cb){cb(ok)})}
+ function loadAt(i){
+  if(i>=urls.length){finished(false);return}
+  var script=document.createElement('script');script.src=urls[i];script.async=true;
+  script.onload=function(){if(window.Hls&&window.Hls.isSupported())finished(true);else loadAt(i+1)};
+  script.onerror=function(){loadAt(i+1)};
+  document.head.appendChild(script);
+ }
+ loadAt(0);
+}
+function errorLabel(code){return code===2?'erreur réseau (connexion/serveur/CORS)':code===3?'format ou codec non pris en charge':code===4?'source refusée ou non compatible':'erreur vidéo '+code}
+function safeError(err){return err&&err.name?err.name:'inconnue'}
+
 function el(id){return document.getElementById(id)}
 function setText(node,t){node.textContent=t}
 function say(t,isError){setText(el('playerMessage'),t);el('playerMessage').className='player-message'+(isError?' error':'')}
@@ -96,45 +119,76 @@ function syncSourceButton(){
  b.style.display='inline-block';b.textContent='⇄ Source suivante ('+sourceCounter()+')';
  var dock=el('dockSourceBtn');dock.style.display='inline-block';dock.title='Source suivante ('+sourceCounter()+')';
 }
+function startVideo(c,generation){
+ var p;
+ try{p=video.play()}catch(e){sourceNotice('Démarrage manuel nécessaire : '+safeError(e),false);clearSourceTimer();return}
+ if(p&&p.catch)p.catch(function(err){
+   if(generation!==sourceGeneration||selected!==c)return;
+   if(err&&err.name==='NotAllowedError'){
+     clearSourceTimer();sourceNotice('Appuie sur ▶ pour lancer le flux '+sourceCounter()+'.',false);
+     setText(el('liveFlag'),'EN ATTENTE DU GESTE');
+   }else if(err&&err.name==='NotSupportedError')nextSource('Format de lecture non pris en charge');
+   else if(err&&err.name!=='AbortError')sourceNotice('Démarrage non confirmé ('+safeError(err)+'). Essaie ▶ ou Source suivante.',true);
+ });
+}
 function activateSource(index,reason){
  if(!selected)return;
  clearSourceTimer();sourceGeneration++;
  var generation=sourceGeneration,c=selected,arr=sourcesFor(c),src=arr[index];
  if(!src)return;
  sourceIndex=index;syncSourceButton();hasPlayback=false;refreshFloating();
- // Never detach the player: this also preserves the floating window.
- video.pause();video.removeAttribute('src');video.load();
- frame.removeAttribute('src');
+ destroyHls();video.pause();video.removeAttribute('src');video.load();frame.removeAttribute('src');
  if(src.kind==='embed'){
-   wrap.className='video-wrap is-embed';
-   setText(el('liveFlag'),'LECTEUR INTÉGRÉ');
-   sourceNotice(c.name+' : lecteur intégré ('+sourceCounter()+'). Appuie sur ▶. Le chargement du cadre ne prouve pas la lecture.',false);
-   frame.src=src.url;
-   return;
+   wrap.className='video-wrap is-embed';setText(el('liveFlag'),'LECTEUR NON VÉRIFIÉ');
+   sourceNotice(c.name+' : ouverture du lecteur intégré ('+sourceCounter()+'). Son chargement ne prouve pas une lecture.',false);
+   frame.src=src.url;return;
  }
- if(!/^https:\/\//i.test(src.url)){sourceNotice('Adresse de direct non sécurisée.',true);return}
- wrap.className='video-wrap is-video';
- setText(el('liveFlag'),'CONNEXION AU DIRECT');
- sourceNotice(c.name+' : connexion au flux '+sourceCounter()+(reason?' — '+reason:'')+'…',false);
- video.src=src.url;video.load();
- sourceTimer=setTimeout(function(){
-   if(generation!==sourceGeneration||selected!==c||video.readyState>=2)return;
-   nextSource('Aucune donnée vidéo après 18 s');
- },18000);
- var attempt=video.play();
- if(attempt&&attempt.catch)attempt.catch(function(err){
-   if(generation!==sourceGeneration||selected!==c)return;
-   if(err&&err.name==='NotAllowedError')sourceNotice('Appuie sur ▶ pour autoriser la lecture du flux '+sourceCounter()+'.',false);
-   else if(err&&err.name==='NotSupportedError')nextSource('Format ou source non pris en charge');
-   else if(err&&err.name!=='AbortError')sourceNotice('Démarrage à vérifier : '+(err.name||'erreur')+'. Essaie ▶ ou Source suivante.',true);
- });
+ if(!/^https:\/\//i.test(src.url)){sourceNotice('Adresse non sécurisée ou invalide.',true);return}
+ wrap.className='video-wrap is-video';setText(el('liveFlag'),'CONNEXION AU DIRECT');
+ sourceNotice(c.name+' : source '+sourceCounter()+(reason?' — '+reason:'')+'…',false);
+ function playbackTimeout(){sourceTimer=setTimeout(function(){
+   if(generation!==sourceGeneration||selected!==c||hasPlayback)return;
+   nextSource('Aucune lecture confirmée après 20 secondes');
+ },20000)}
+ var hlsUrl=/\.m3u8(?:[?#]|$)/i.test(src.url);
+ var ua=navigator.userAgent||'';
+ var appleWebkit=/iPad|iPhone|iPod/.test(ua)||(/Safari/.test(ua)&&!/Chrome|Chromium|CriOS|Edg|Firefox|FxiOS|OPR/.test(ua));
+ var nativeHls=!!video.canPlayType('application/vnd.apple.mpegurl')&&appleWebkit;
+ if(hlsUrl&&!nativeHls){
+   setText(el('liveFlag'),'INITIALISATION HLS');
+   sourceNotice('Chargement du moteur HLS pour ce navigateur : '+c.name+'…',false);
+   loadHlsLibrary(function(ok){
+    if(generation!==sourceGeneration||selected!==c)return;
+    if(!ok){nextSource('Impossible de charger le moteur HLS.js (CDN indisponible ou navigateur incompatible)');return}
+    try{
+     var instance=new window.Hls({enableWorker:true,lowLatencyMode:false,backBufferLength:20,maxBufferLength:30});
+     hlsEngine=instance;
+     instance.on(window.Hls.Events.MANIFEST_PARSED,function(){
+       if(generation!==sourceGeneration||selected!==c)return;
+       setText(el('liveFlag'),'FLUX HLS TROUVÉ');startVideo(c,generation);
+     });
+     instance.on(window.Hls.Events.ERROR,function(event,data){
+       if(generation!==sourceGeneration||selected!==c)return;
+       if(data&&data.fatal){
+         var detail=(data.details||data.type||'inconnue');
+         nextSource('Échec HLS '+detail+' (serveur, CORS ou autorisation)');
+       }
+     });
+     playbackTimeout();
+     instance.loadSource(src.url);instance.attachMedia(video);
+    }catch(e){nextSource('Le moteur HLS ne peut pas lire cette source')}
+   });
+ }else{
+   video.src=src.url;video.load();playbackTimeout();startVideo(c,generation);
+ }
 }
+
 function nextSource(reason){
  if(!selected)return;
  var total=sourcesFor(selected).length;
  if(sourceIndex+1<total){activateSource(sourceIndex+1,reason||'essai de secours');return}
  clearSourceTimer();hasPlayback=false;refreshFloating();
- var suffix=selected.id==='arte'?' ARTE peut être géobloquée dans ton pays.':'';
+ var suffix=selected.id==='arte'?' ARTE peut être géobloquée.':selected.id==='cnews'?' CNEWS peut exiger une autorisation du diffuseur ; ses anciens lecteurs Dailymotion renvoient 403 sans identifiant valide.':'';
  sourceNotice(selected.name+' : aucune des '+total+' source(s) n’a été confirmée. '+(reason||'Lecteur indisponible')+'.'+suffix+' Vérifie ton réseau ou réessaie plus tard.',true);
  setText(el('liveFlag'),'LECTURE NON CONFIRMÉE');
 }
@@ -164,7 +218,7 @@ function render(){renderCards();renderQuick()}
 video.addEventListener('playing',function(){
  if(selected&&sourcesFor(selected)[sourceIndex].kind==='stream'){
    clearSourceTimer();hasPlayback=true;setText(el('liveFlag'),'EN DIRECT');
-   sourceNotice('Lecture en cours : '+selected.name+' (source '+sourceCounter()+').',false);refreshFloating();
+   sourceNotice('Lecture confirmée : '+selected.name+' (source '+sourceCounter()+').',false);refreshFloating();
  }
 });
 video.addEventListener('pause',function(){
@@ -174,8 +228,8 @@ video.addEventListener('ended',function(){hasPlayback=false;refreshFloating()});
 frame.addEventListener('load',function(){
  if(selected&&sourcesFor(selected)[sourceIndex].kind==='embed'&&frame.getAttribute('src')){
    // An iframe load indicates page load, NOT successful video playback.
-   hasPlayback=true;setText(el('liveFlag'),'LECTEUR CHARGÉ');
-   sourceNotice(selected.name+' : lecteur chargé. Appuie sur ▶ ; si écran noir, essaie « Source suivante ».',false);
+   hasPlayback=false;setText(el('liveFlag'),'LECTURE INCONNUE');
+   sourceNotice(selected.name+' : page du lecteur chargée, mais la vidéo n’est PAS confirmée. Si tu vois un refus, essaie Source suivante.',false);
    refreshFloating();
  }
 });
@@ -188,7 +242,7 @@ video.addEventListener('waiting',function(){
 video.addEventListener('error',function(){
  if(!selected||sourcesFor(selected)[sourceIndex].kind!=='stream')return;
  var code=video.error?video.error.code:'inconnu';
- nextSource('Erreur vidéo '+code);
+ nextSource(errorLabel(code));
 });
 
 /* Le lecteur passe en surimpression lorsque sa position naturelle sort en haut. */
@@ -218,7 +272,7 @@ el('restoreBtn').addEventListener('click',function(){
  window.scrollTo(0,Math.max(0,y));refreshFloating();
 });
 function stopDirect(){
- clearSourceTimer();sourceGeneration++;sourceIndex=0;
+ clearSourceTimer();sourceGeneration++;sourceIndex=0;destroyHls();
  hasPlayback=false;dockHidden=false;setFloating(false);
  selected=null;state.selected='';save();
  video.pause();video.removeAttribute('src');video.load();frame.removeAttribute('src');
