@@ -61,7 +61,7 @@ var channels=[
 {id:'bfm',name:'BFM TV',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8',alternates:[{kind:'stream',url:'https://ncdn-live-bfm.pfd.sfr.net/shls/LIVE$BFM_TV/index.m3u8?end=END&start=LIVE'},{kind:'stream',url:'https://d133u1kwyeqhav.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-cfh0ys5588w7f/index.m3u8'}],colors:['#133b90','#2370cd']},
 {id:'bfmbusiness',name:'BFM Business',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8',alternates:[{kind:'stream',url:'https://ncdn-live-bfm.pfd.sfr.net/shls/LIVE$BFM_BUSINESS/index.m3u8?end=END&start=LIVE'}],colors:['#124578','#438abf']},
 {id:'20minutes',name:'20 Minutes TV',tag:'20M',cat:'TV',kind:'stream',url:'https://live-20minutestv.digiteka.com/1961167769/index.m3u8',alternates:[{kind:'stream',url:'https://lives.digiteka.com/stream/86d3e867-a272-496b-8412-f59aa0104771/index.m3u8'}],colors:['#286f96','#4dacc6']},
-{id:'cnews',name:'CNEWS',tag:'C',cat:'Info',kind:'stream',note:'Le direct peut refuser une lecture depuis un site externe',url:'https://hls-m010-live-aka-canalplus.akamaized.net/live/disk/cnews-clair-hd/hls-v3-hd-clair/cnews-clair-hd.m3u8',colors:['#751d2d','#cb3748']},
+{id:'cnews',name:'CNEWS',tag:'C',cat:'Info',kind:'embed',note:'Direct intégré depuis Dailymotion',url:'https://geo.dailymotion.com/player/xl0ra.html?video=x3b68jn',colors:['#751d2d','#cb3748']},
 {id:'euronews-fr',name:'Euronews Français',tag:'EU',cat:'Info',kind:'stream',note:'Plusieurs sources à tester : disponibilité variable',url:'https://cdn-euronews.akamaized.net/live/eds/euronews-fr/25026/index.m3u8',alternates:[{kind:'stream',url:'https://rakuten-euronews-2-fr.samsung.wurl.com/manifest/playlist.m3u8'},{kind:'stream',url:'https://viamotionhsi.netplus.ch/live/eds/euronews/browser-HLS8/euronews.m3u8'},{kind:'stream',url:'https://shls-live-ak.akamaized.net/out/v1/302a3ad418214d3f94460738a805b930/index.m3u8'}],colors:['#1b4c75','#528bac']},
 {id:'tv5monde-info',name:'TV5MONDE Info',tag:'TV5',cat:'Info',kind:'stream',note:'Disponibilité variable selon le pays',url:'https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8',alternates:[{kind:'stream',url:'https://ott.tv5monde.com/Content/HLS/Live/channel(info)/index.m3u8'}],colors:['#295a60','#46a6a3']}
 ];
@@ -204,9 +204,9 @@ function renderCards(){var root=el('cards');root.innerHTML='';var search=el('sea
  var item=dom('article','channel-card'+(selected&&selected.id===c.id?' active':''));
  var main=onButton('','card-main',function(){go(c)});main.setAttribute('aria-label','Regarder '+c.name);
  var visual=dom('div','card-visual');visual.style.background=tint(c);
- visual.appendChild(dom('span','mini-live',c.id==='cnews'?'● ACCÈS À VÉRIFIER':'● DIRECT'));
+ visual.appendChild(dom('span','mini-live','● DIRECT'));
  visual.appendChild(dom('span','card-monogram',c.tag||'TV'));main.appendChild(visual);
- var body=dom('div','card-body');body.appendChild(dom('div','card-name',c.name));body.appendChild(dom('div','card-description',c.id==='cnews'?'Info · Accès direct non confirmé':c.cat+' · Vidéo en direct'));main.appendChild(body);item.appendChild(main);
+ var body=dom('div','card-body');body.appendChild(dom('div','card-name',c.name));body.appendChild(dom('div','card-description',c.id==='cnews'?'Info · Lecteur intégré Dailymotion':c.cat+' · Vidéo en direct'));main.appendChild(body);item.appendChild(main);
  var star=onButton(starred(c.id)?'★':'☆','star'+(starred(c.id)?' active':''),function(){fav(c.id)});star.setAttribute('aria-label',(starred(c.id)?'Retirer des':'Ajouter aux')+' favoris : '+c.name);item.appendChild(star);root.appendChild(item)
  });setText(el('countLabel'),'('+matches+')');if(matches===0)root.appendChild(dom('div','no-results','Aucune chaîne trouvée. Essaie un autre filtre ou ajoute ta chaîne.'))}
 function renderQuick(){var root=el('quickList');root.innerHTML='';var ids=['fr24','euronews-fr','cnews','arte','bfm'];ids.forEach(function(id){var c=getById(id);if(!c)return;var b=onButton('','rail-item'+(selected&&selected.id===id?' active':''),function(){go(c);if(window.innerWidth<821){el('videoWrap').scrollIntoView()}});var logo=dom('span','rail-logo',c.tag);logo.style.background=tint(c);b.appendChild(logo);var info=dom('span','rail-info');info.appendChild(dom('span','rail-name',c.name));info.appendChild(dom('span','rail-type',c.cat+' · En direct'));b.appendChild(info);b.appendChild(dom('span','rail-arrow','›'));root.appendChild(b)})}
@@ -225,7 +225,7 @@ frame.addEventListener('load',function(){
  if(selected&&sourcesFor(selected)[sourceIndex].kind==='embed'&&frame.getAttribute('src')){
    // An iframe load indicates page load, NOT successful video playback.
    hasPlayback=false;setText(el('liveFlag'),'LECTURE INCONNUE');
-   sourceNotice(selected.name+' : page du lecteur chargée, mais la vidéo n’est PAS confirmée. Si tu vois un refus, essaie Source suivante.',false);
+   sourceNotice(selected.name+' : lecteur Dailymotion chargé. Appuie sur ▶ si nécessaire. La lecture est à confirmer sur ton appareil.',false);
    refreshFloating();
  }
 });
