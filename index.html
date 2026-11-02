@@ -133,7 +133,7 @@
         <div class="field"><label for="name">Nom de la chaîne</label><input id="name" maxlength="70" required placeholder="Ex. Ma chaîne"></div>
         <div class="field"><label for="address">Adresse HTTPS du flux ou du site</label><input id="address" type="url" inputmode="url" required placeholder="https://…/direct.m3u8"></div>
         <div class="field"><label for="kind">Type</label><select id="kind"><option value="stream">Flux HLS / MP4 à lire ici</option><option value="site">Ouvrir le site officiel</option></select></div>
-        <div class="field"><label for="category">Catégorie</label><select id="category"><option>Info</option><option>Culture</option><option>TV</option><option>Monde</option><option>Autres</option></select></div>
+        <div class="field"><label for="category">Catégorie</label><select id="category"><option>Info</option><option>Culture</option><option>TV</option><option>Monde</option><option>Suriname</option><option>Autres</option></select></div>
         <div class="help">Le lien doit commencer par https:// et pointer vers un flux que tu es autorisé à consulter.</div>
         <div class="row-actions"><button type="button" class="btn secondary" id="cancelBtn">Annuler</button><button type="submit" class="btn accent">Ajouter</button></div>
       </form>
@@ -151,11 +151,15 @@
     {id:'fr24en',name:'France 24 English',tag:'F24',cat:'Monde',kind:'stream',url:'https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_5000.m3u8'},
     {id:'arte',name:'ARTE',tag:'ARTE',cat:'Culture',kind:'stream',url:'https://artesimulcast.akamaized.net/hls/live/2031003/artelive_fr/index.m3u8',note:'Géoblocage possible'},
     {id:'bfm',name:'BFM TV',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8'},
-    {id:'africanews',name:'Africanews Français',tag:'AFN',cat:'Info',kind:'stream',url:'https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8'},
-    {id:'africa24',name:'Africa 24',tag:'A24',cat:'Monde',kind:'stream',url:'https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8'},
     {id:'bfmbusiness',name:'BFM Business',tag:'BFM',cat:'Info',kind:'stream',url:'https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8'},
     {id:'20minutes',name:'20 Minutes TV',tag:'20M',cat:'TV',kind:'stream',url:'https://live-20minutestv.digiteka.com/1961167769/index.m3u8'},
-    {id:'cnews-site',name:'CNEWS · site officiel',tag:'C',cat:'Info',kind:'site',url:'https://www.cnews.fr/',note:'Le direct officiel peut demander une connexion'}
+    {id:'cnews-site',name:'CNEWS · CANAL+ officiel',tag:'C',cat:'Info',kind:'site',url:'https://www.canalplus.com/chaines/cnews',note:'Ouverture CANAL+ ; compatibilité iOS 12 à vérifier'},
+    {id:'tbn-sr',name:'Trishul TV · Suriname',tag:'TBN',cat:'Suriname',kind:'stream',url:'https://live.suricloud.com/hls/tbntv/index.m3u8',note:'Diffusion non continue'},
+    {id:'shalom-sr',name:'Shalom TV · Suriname',tag:'SH',cat:'Suriname',kind:'stream',url:'https://media.streambrothers.com:1936/8400/8400/playlist.m3u8',note:'Disponibilité à vérifier'},
+    {id:'atv1-sr',name:'ATV 1 · Suriname',tag:'ATV',cat:'Suriname',kind:'site',url:'https://ts.suricloud.com/atv1/embed.html',note:'Lecteur ATV via Telesur'},
+    {id:'atv2-sr',name:'ATV 2 · Suriname',tag:'ATV',cat:'Suriname',kind:'site',url:'https://ts.suricloud.com/atv2/embed.html',note:'Lecteur ATV via Telesur'},
+    {id:'atv3-sr',name:'ATV 3 · Suriname',tag:'ATV',cat:'Suriname',kind:'site',url:'https://ts.suricloud.com/atv3/embed.html',note:'Lecteur ATV via Telesur'},
+    {id:'apintie-sr',name:'Apintie TV · Suriname',tag:'API',cat:'Suriname',kind:'site',url:'https://www.apintie.sr/livestream',note:'Lecteur sur le site officiel'}
   ];
   var STORAGE = 'minitv-ipad12-v1';
   var state = {custom:[],fav:[],selected:'',filter:'Toutes'};
@@ -169,7 +173,7 @@
   function text(el,value) {el.textContent=value;}
   function setStatus(msg,bad) {text(status,msg);status.className=bad?'status bad':'status';}
   function button(label,cls,onClick) {var b=document.createElement('button');b.type='button';b.className=cls;text(b,label);b.addEventListener('click',onClick);return b;}
-  function filters() {var root=document.getElementById('filters');root.innerHTML='';var types=['Toutes','★ Favoris','Info','Culture','Monde','TV','Autres'];types.forEach(function(t){root.appendChild(button(t,'filter'+(state.filter===t?' active':''),function(){state.filter=t;filters();render();}));});}
+  function filters() {var root=document.getElementById('filters');root.innerHTML='';var types=['Toutes','★ Favoris','Suriname','Info','Culture','Monde','TV','Autres'];types.forEach(function(t){root.appendChild(button(t,'filter'+(state.filter===t?' active':''),function(){state.filter=t;filters();render();}));});}
   function render() {
     var root=document.getElementById('channels');root.innerHTML='';var query=document.getElementById('search').value.toLowerCase().trim();var arr=list();var total=0;
     arr.forEach(function(c){
@@ -192,7 +196,7 @@
     document.getElementById('removeBtn').className = c.id.indexOf('custom-')===0 || c.id.indexOf('import-')===0 ? 'btn secondary' : 'btn secondary hidden';
     if(c.kind==='site') {
       video.pause();video.removeAttribute('src');video.load();shell.classList.remove('active');text(document.getElementById('liveTag'),'SITE OFFICIEL');
-      setStatus('Cette chaîne ouvre son site officiel : touche « Ouvrir le direct ».');return;
+      var win=window.open(c.url,'_blank');if(win){try{win.opener=null;}catch(err){}}setStatus(win?'Lecteur officiel ouvert dans un autre onglet.':'Ouverture bloquée : touche « Ouvrir le direct ».',!win);return;
     }
     if(!/^https:\/\//i.test(c.url)) {setStatus('Adresse non sécurisée : utilise un flux HTTPS.',true);return;}
     shell.classList.add('active');text(document.getElementById('liveTag'),'CHARGEMENT DU DIRECT');setStatus('Connexion directe à '+c.name+'…');
@@ -233,7 +237,7 @@
         var line=lines[i].trim();if(line.indexOf('#EXTINF:')===0){name=line.split(',').slice(1).join(',').trim()||'Chaîne sans nom';var m=line.match(/group-title="([^"]+)"/i);cat=m?m[1].substring(0,35):'TV';continue;}
         if(!line||line[0]==='#')continue;
         if(!/^https:\/\//i.test(line)||existing[line]||state.custom.length>=200){skipped++;name='';continue;}
-        var category=/info|news|actualité/i.test(cat)?'Info':/culture|art/i.test(cat)?'Culture':/world|monde|international/i.test(cat)?'Monde':'TV';
+        var category=/suriname|surinaam|sranan/i.test(cat)?'Suriname':/info|news|actualité/i.test(cat)?'Info':/culture|art/i.test(cat)?'Culture':/world|monde|international/i.test(cat)?'Monde':'TV';
         var display=(name||'Chaîne '+(added+1)).substring(0,70);
         state.custom.push({id:'import-'+Date.now()+'-'+i,name:display,tag:display.substring(0,3).toUpperCase(),cat:category,kind:'stream',url:line});existing[line]=true;added++;name='';
       }
@@ -244,7 +248,7 @@
   });
   document.getElementById('search').addEventListener('input',render);
   load();filters();render();
-  setStatus('Sélectionne une chaîne. Conseil : commence par France 24 Français.');
+  setStatus('Choisis une chaîne. Suriname : essaie Trishul TV pour la lecture HLS.');
 })();
 </script>
 </body>
